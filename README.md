@@ -1,68 +1,40 @@
 # meridian-gfx-palette-mark
 
-`meridian-gfx-palette-mark` is a Dart project for Graphics. It turns design a Dart verification harness for palette systems, covering resource planning, capacity fixtures, and failure-oriented tests into a small local model with readable fixtures and a direct verification command.
-
-## Reading Meridian Gfx Palette Mark
-
-Start with the README, then open `metadata/project.json` to check the constants behind the examples. After that, `fixtures/cases.csv` shows the compact path and `examples/extended_cases.csv` gives a wider look at the same rule.
-
-## What It Does
-
-- Includes extended examples for render inputs, including `recovery` and `degraded`.
-- Documents stable output tradeoffs in `docs/operations.md`.
-- Runs locally with a single verification command and no external credentials.
-- Stores project constants and verification metadata in `metadata/project.json`.
-- Adds a repository audit script that checks structure before running the language verifier.
+`meridian-gfx-palette-mark` explores graphics with a small Dart codebase and local fixtures. The technical goal is to design a Dart verification harness for palette systems, covering resource planning, capacity fixtures, and failure-oriented tests.
 
 ## Purpose
 
-I use this kind of project to make a rule visible before adding more machinery around it. The important part here is not the size of the codebase. It is that the input signals, scoring rule, fixture data, and expected output can all be checked in one sitting.
+I want this repository to be useful as a quick reading exercise: fixtures first, implementation second, verifier last.
 
-## Files Worth Reading
+## Meridian Gfx Palette Mark Review Notes
 
-- `lib`: library code
-- `tests`: verification harness
-- `fixtures`: compact golden scenarios
-- `examples`: expanded scenario set
-- `metadata`: project constants and verification metadata
-- `docs`: operations and extension notes
-- `scripts`: local verification and audit commands
+`edge` and `stress` are the cases worth reading first. They show the optimistic and cautious ends of the fixture.
 
-## Design Sketch
+## What Is Covered
 
-The design is intentionally direct: parse or construct a signal, score it, classify it, and verify the expected branch. This makes the repository useful for studying graphics behavior without needing a service or database unless the language project itself is SQL. The Dart project uses a small library and assertion script, avoiding package dependencies for verification.
+- `fixtures/domain_review.csv` adds cases for geometry span and atlas pressure.
+- `metadata/domain-review.json` records the same cases in structured form.
+- `config/review-profile.json` captures the read order and the two review questions.
+- `examples/meridian-gfx-palette-walkthrough.md` walks through the case spread.
+- The Dart code includes a review path for `shader drift` and `atlas pressure`.
+- `docs/field-notes.md` explains the strongest and weakest cases.
 
-## Usage
+## Implementation Notes
+
+The fixture data drives the tests. The code stays thin, while `metadata/domain-review.json` and `config/review-profile.json` explain what each case is meant to protect.
+
+The Dart code keeps the review rule close to the tests.
+
+## Command
 
 ```powershell
 powershell -NoProfile -ExecutionPolicy Bypass -File scripts/verify.ps1
 ```
 
-This runs the language-level build or test path against the compact fixture set.
+## Audit Path
 
-## Fixture Notes
-
-`surge` is the first example I would inspect because it lands on the `accept` path with a score of 186. The broader file also keeps `degraded` at -39 and `recovery` at 205, which gives the model a useful low-to-high spread.
-
-## Verification
-
-```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts/audit.ps1
-```
-
-The audit command checks repository structure and README constraints before it delegates to the verifier.
+The check exercises the source code and the review fixture. `edge` is the high score at 245; `stress` is the low score at 168.
 
 ## Limits
 
-The repository favors determinism over breadth. It does not pull live data, keep secrets, or depend on network access for verification.
-
-## Next Directions
-
-- Add a comparison mode that shows how decisions change when one signal is adjusted.
-- Add a loader for `examples/extended_cases.csv` and promote selected cases into the language test suite.
-- Add a short report command that prints the score breakdown for a single scenario.
-- Add one more graphics fixture that focuses on a malformed or borderline input.
-
-## Setup
-
-The only required setup is the local Dart toolchain. After cloning, stay in the repo root so fixture paths resolve correctly.
+The repository is intentionally scoped to local checks. I would expand it by adding adversarial fixtures before adding features.
